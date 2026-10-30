@@ -1,0 +1,6 @@
+variable,geo,value,moe,source
+B19013_001E,United States,84780,215,"ACS 2025 1-year, data.census.gov table ACSDT1Y2025.B19013, ucgid 0100000US (fetched 2026-10-29)"
+B19080_001E,United States,35046,121,"ACS 2025 1-year B19080 lowest quintile upper limit"
+B19080_002E,United States,66788,154,"ACS 2025 1-year B19080 second quintile upper limit"
+B19080_003E,United States,105373,213,"ACS 2025 1-year B19080 third quintile upper limit"
+B19080_004E,United States,169893,331,"ACS 2025 1-year B19080 fourth quintile upper limit"

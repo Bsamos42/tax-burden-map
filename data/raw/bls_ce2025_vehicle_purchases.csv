@@ -1,0 +1,14 @@
+group,mean_income_before_taxes,vehicle_purchases_net_outlay,vehicle_purchases_se,new_cars_trucks,used_cars_trucks
+decile_1,10311,2370,633.61,1260,1110
+decile_2,25922,1657,356.97,518,1139
+decile_3,39328,1952,786.96,1079,870
+decile_4,52830,2491,553.94,782,1687
+decile_5,69043,3848,754.03,1947,1838
+decile_6,88077,5353,909.01,2517,2763
+decile_7,110930,6269,1051.6,2931,3280
+decile_8,141633,5850,741.87,3118,2612
+decile_9,188011,9234,1788.37,3115,6061
+decile_10,384045,11273,1292.46,6211,4997
+all_consumer_units,110847,5023,323.22,2345,2632
+married_couple_oldest_child_6_to_17,177447,7780,,,
+# Source: BLS Consumer Expenditure Surveys 2025, Table 1110 deciles of income before taxes (https://www.bls.gov/cex/tables/calendar-year/mean-item-share-average-standard-error/cu-income-deciles-before-taxes-2025.xlsx) and composition of consumer unit table (cu-composition-2025.xlsx). Annual means per consumer unit; vehicle purchases are net outlay (price less trade-in). Fetched 2026-10-29.

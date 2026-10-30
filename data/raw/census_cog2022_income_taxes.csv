@@ -1,0 +1,54 @@
+state,local_individual_income_tax_k,state_individual_income_tax_k,local_total_taxes_k
+United States Total,44730192,555886526,894128023
+Alabama,137083,6089061,7579524
+Alaska,0,0,2137534
+Arizona,0,7529879,13915450
+Arkansas,0,3717880,3295940
+California,0,146190014,120629380
+Colorado,0,11685999,20270833
+Connecticut,0,9861264,12328558
+Delaware,0,2405043,1480411
+District of Columbia,3116991,0,10077565
+Florida,0,0,49372703
+Georgia,0,18286845,23225313
+Hawaii,0,3759856,3439764
+Idaho,0,2594552,2245648
+Illinois,0,22697437,40594096
+Indiana,1201658,11749037,10301610
+Iowa,104088,4974623,7494943
+Kansas,992,4836130,5993278
+Kentucky,1825233,6180726,7028801
+Louisiana,0,4478708,10859421
+Maine,0,2590903,3553898
+Maryland,7425489,12228623,20425762
+Massachusetts,0,24399902,22004068
+Michigan,694375,12879815,15997880
+Minnesota,0,15130683,11133759
+Mississippi,0,2537787,3819197
+Missouri,480693,8942661,13859417
+Montana,0,2387008,1871759
+Nebraska,0,3239491,5774476
+Nevada,0,0,5774571
+New Hampshire,0,153620,4770979
+New Jersey,0,20630297,34176192
+New Mexico,0,2172165,4211553
+New York,17157150,70737342,118785823
+North Carolina,0,17672005,18271495
+North Dakota,0,472925,1634566
+Ohio,6542877,11246994,30196493
+Oklahoma,0,4157808,7011339
+Oregon,147925,11772886,10530837
+Pennsylvania,5895638,17381999,32670091
+Rhode Island,0,1939003,2855552
+South Carolina,0,6854835,10329817
+South Dakota,0,0,2122617
+Tennessee,0,9480,10532145
+Texas,0,0,81428414
+Utah,0,6812367,7632656
+Vermont,0,1268299,867593
+Virginia,0,19732749,22595467
+Washington,0,0,21661953
+West Virginia,0,2502828,2445669
+Wisconsin,0,8994997,11714063
+Wyoming,0,0,1197150
+# Source: U.S. Census Bureau, 2022 Census of Governments: Finance, Table 1 "State and Local Government Finances by Level of Government and by State: 2022" (https://www2.census.gov/programs-surveys/gov-finances/tables/2022/22slsstab1.xlsx), line 18 Individual income; local = local government amount; thousands of dollars. Fetched 2026-10-29.

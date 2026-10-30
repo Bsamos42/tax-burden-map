@@ -1,0 +1,31 @@
+state,basis,state_rate_pct,local_treatment,cap_note,verified,source
+AL,automotive rate,2.00,local automotive rates assumed at half the general local rate,,partial,"Alabama DOR Automotive Sales, Use and Lease Tax Guide (https://www.revenue.alabama.gov/wp-content/uploads/2022/06/Automotive_Sales_Use_Lease_Tax_Guide.pdf); local share is an assumption"
+AK,local only,0.00,general local average,many local caps not modeled,assumption,No state sales tax; local average from Tax Foundation midyear 2025
+AR,general,6.50,local tax limited to first $2500 of a single item,,assumption,Arkansas single-transaction local cap
+CT,general,6.35,none,7.75% above $50000 not modeled,assumption,Connecticut general rate
+DC,motor vehicle excise,6.00,none,"class 3,500-4,999 lb, 21-25 mpg",yes,"DC DMV vehicle title excise rates effective Feb. 17, 2025 (https://dmv.dc.gov/book/vehicle-fees/vehicle-title)"
+DE,document fee,4.50,none,"4.25% through Sept. 30, 5.25% from Oct. 1, 2025 (year average)",yes,DE DMV dealer notice (https://dealers.dmv.de.gov/Dealer/News/OpenFile?NewsID=171)
+FL,general,6.00,local surtax limited to first $5000,,assumption,Florida discretionary sales surtax single-item limit
+GA,title ad valorem tax,7.00,none (TAVT replaces sales tax),,yes,Georgia DOR TAVT bulletin (https://dor.georgia.gov/media/35406/download)
+IA,fee for new registration,5.00,none,,yes,Iowa Code 321.105A (https://www.legis.iowa.gov/docs/code/2026/321.105A.pdf)
+IL,general,6.25,general local average,home-rule exclusion for titled vehicles not modeled,assumption,Illinois general rate
+KY,motor vehicle usage tax,6.00,none,,yes,Boyle County Clerk (https://boylecountyky.gov/179/Usage-Tax)
+MD,titling tax,6.00,none,,assumption,Maryland titling tax
+MN,motor vehicle sales tax,6.875,none (flat $20 local excise ignored),,yes,Minnesota Revenue motor vehicle guide (https://www.revenue.state.mn.us/book/export/html/19281)
+MS,motor vehicle sales tax,5.00,none,,yes,Lamar County MS (https://lamarcountyms.gov/ms/ufaq/how-much-sales-tax-do-i-pay-when-i-buy-a-vehicle/)
+MT,none,0.00,none,,yes,No sales tax
+NC,highway use tax,3.00,none,,yes,G.S. 105-187.3 (https://ncleg.gov/EnactedLegislation/Statutes/HTML/ByArticle/Chapter_105/Article_5A.html)
+ND,motor vehicle excise tax,5.00,none,,yes,ND Tax Commissioner special taxes (https://www.tax.nd.gov/special-taxes)
+NH,none,0.00,none,,yes,No sales tax
+NM,motor vehicle excise tax,4.00,none,,yes,NM Taxation and Revenue (https://www.tax.newmexico.gov/?p=1820)
+OK,excise plus sales,4.50,none,3.25% excise + 1.25% sales tax (new vehicle basis),yes,Oklahoma Policy Institute citing HB 2433 (https://okpolicy.org/motor-vehicle-taxes/)
+OR,privilege tax,0.50,none,new vehicles only (applied to new-vehicle share of outlay),yes,ORS 320.405 (https://oregon.public.law/statutes/ors_320.405)
+SC,infrastructure maintenance fee,5.00,none,maximum $500 per vehicle,yes,SCDMV (https://scdmvonline.com/News/New-Fee-Beginning-July-1-2017)
+SD,motor vehicle excise tax,4.00,none,,assumption,South Dakota motor vehicle excise tax
+TN,general,7.00,local on first $1600 plus 2.75% state single-article tax on $1600-3200,,assumption,Tennessee single-article rules
+TX,motor vehicle sales tax,6.25,none,,yes,Texas Comptroller (https://comptroller.texas.gov/taxes/publications/96-254/tax-rates.php)
+VA,motor vehicle sales and use tax,4.15,none,$75 minimum,yes,Virginia DMV (https://www.dmv.virginia.gov/vehicles/taxes-fees/sut)
+VT,purchase and use tax,6.00,none,,yes,Vermont DMV (https://dmv.vermont.gov/tax-title/vehicle-taxation)
+WA,general plus motor vehicle tax,6.80,general local average,6.5% + 0.3% motor vehicle tax,yes,WA DOR special notice (https://www.dor.wa.gov/sites/default/files/2023-04/sn_03_MotorVehicle.pdf)
+WV,privilege tax,6.00,none (municipal taxes barred),,yes,W. Va. Code 11-15-3c (https://code.wvlegislature.gov/11-15-3c/)
+# All other states: general state rate plus the model's average local general sales rate. Caps are converted to effective rates at an assumed $30,000 taxable price per vehicle.

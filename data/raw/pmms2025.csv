@@ -1,0 +1,4 @@
+measure,value,source
+pmms30_2025_annual_average_pct,6.5951,"Freddie Mac PMMS weekly history (https://www.freddiemac.com/pmms/docs/PMMS_history.csv), mean of 53 weekly 30-year FRM rates dated 1/2/2025 through 12/31/2025; fetched 2026-10-29"
+pmms30_2025_first_week_pct,6.91,1/2/2025
+pmms30_2025_last_week_pct,6.15,12/31/2025

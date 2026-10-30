@@ -1,0 +1,17 @@
+Data and documentation license
+
+The results in data/processed and output, METHODOLOGY.md, and the
+author-compiled file data/raw/vehicle_tax_rates_2025.csv are licensed under
+the Creative Commons Attribution 4.0 International License (CC BY 4.0).
+
+Copyright (c) 2026 Brent Amos
+
+You may share and adapt this material for any purpose, including commercially,
+as long as you give appropriate credit, provide a link to the license, and
+indicate if changes were made.
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Source data in data/raw from U.S. government agencies is in the public domain
+and is not covered by this license. Third-party data not included in this
+repository remains under its publishers' terms.

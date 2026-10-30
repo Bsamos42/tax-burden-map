@@ -1,0 +1,10 @@
+measure,universe,valid_obs,p25,median,p75,weighting
+value_to_annual_rent_multiple,properties with 5+ units (NUMCAT_R 02-04),1401,4.333,7.273,11.667,WEIGHT x NUMUNITS_R
+market_value_per_unit_usd,properties with 5+ units,2260,55556,107527,200000,WEIGHT x NUMUNITS_R
+monthly_rent_receipts_per_unit_usd,properties with 5+ units,1653,868.06,1250,1680.11,WEIGHT x NUMUNITS_R
+cap_rate,properties with 5+ units,984,0.0475,0.0725,0.1206,WEIGHT x NUMUNITS_R
+operating_expense_to_rent_receipts,properties with 5+ units,1169,0.2375,0.3623,0.5203,WEIGHT x NUMUNITS_R
+# Source: HUD and Census Bureau, 2024 Rental Housing Finance Survey public use file (https://www2.census.gov/programs-surveys/rhfs/data/public-use-files/2024/rhfspuf2024.csv; codebook Codebook-Version-1.pdf), reference year calendar 2023. Fetched 2026-10-29 and summarized in the browser (file not reachable from the build workspace).
+# value_to_annual_rent_multiple = MRKTVALPU_R / (12 x MRENTRCTS_R) per property; weighted quantiles. Ratio of medians = 107527 / (12 x 1250) = 7.17, consistent.
+# Cross-check: (1 - opex ratio) / cap rate = (1 - 0.362) / 0.0725 = 8.8.
+# Not used: TRENTRCTPV_R (only 117 valid 5+ unit records). OPTAX_R is published only in dollar categories, so taxes / receipts cannot be computed from the PUF.

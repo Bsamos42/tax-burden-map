@@ -1,0 +1,15 @@
+check,value
+"Spearman: model state-median vs ITEP middle 20% (sales, property, PIT only)",0.8178827825354452
+Spearman: model state-median vs ITEP middle 20% (all taxes),0.5764844295642333
+Spearman: model P10 vs ITEP lowest 20% (like-for-like),0.4972388955582233
+Spearman: model P90 vs ITEP next 15% (like-for-like),0.9150060024009604
+Spearman: model state-median vs Tax Foundation burden,0.4841948953717675
+"Pearson: owner property tax rate, ACS vs Lincoln city/rural average",0.826356578464889
+States moving 10+ ranks vs ITEP,11.0
+States moving 10+ ranks vs Tax Foundation,25.0
+Mean model state-median rate,0.06658998652259751
+Mean ITEP middle 20% like-for-like rate,0.0721508
+"FHA check: max absolute change in owner effective rate, pp",0.4048924582663647
+FHA check: states with change >= 0.1 pp,8.0
+"Renter share 15%: mean change in renter rate, pp",-1.1832916383027168
+"Renter share 100%: mean change in renter rate, pp",1.6904166261467384
