@@ -1,0 +1,66 @@
+/* Shared design tokens for every page in the project: type, interface colors and
+ * the reserved data colors. JavaScript reads the data colors from here
+ * (js/tokens.js), so this file is the single source for them.
+ *
+ * Reserved data colors: each has one meaning across the burden map, the county
+ * view and What Taxes Buy. Never reuse a hue for another meaning. What Taxes
+ * Buy's above/below-expected scale needs its own diverging pair that uses none
+ * of these hues.
+ */
+
+/* Source Sans 3, latin subset, self-hosted (SIL Open Font License; see fonts/OFL.txt) */
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 400; font-display: swap; src: url(../fonts/source-sans-3-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 600; font-display: swap; src: url(../fonts/source-sans-3-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 700; font-display: swap; src: url(../fonts/source-sans-3-latin-700-normal.woff2) format('woff2'); }
+
+:root {
+  /* Interface */
+  --ink: #1A1A1A;
+  --ink-2: #333333;
+  --muted: #4D4D4D;
+  --muted-2: #595959;
+  --rule: #D9D9D9;
+  --rule-2: #C9CED3;
+  --panel: #F2F4F6;
+  --red-text: #B3241F;
+  --link: #0E4A8A;
+  --link-hover: #123F70;
+  --bg: #FFFFFF;
+  color-scheme: only light;
+
+  /* Reserved: tax burden, rate or dollars, low to high */
+  --burden-1: #D3E4F3;
+  --burden-2: #B3D2EA;
+  --burden-3: #84B5DB;
+  --burden-4: #5394C9;
+  --burden-5: #2B6FAF;
+  --burden-6: #0E4A8A;
+
+  /* Reserved: regressivity gap, slate = progressive, orange = regressive */
+  --gap-1: #3E5368;
+  --gap-2: #6B8199;
+  --gap-3: #9DAFC1;
+  --gap-4: #D3DCE5;
+  --gap-5: #F7CF9C;
+  --gap-6: #E08A2E;
+  --gap-7: #A44F08;
+
+  /* Reserved: net refund (fill plus dots) */
+  --refund: #A9CBA2;
+  --refund-dot: #4F7D49;
+
+  /* Reserved: header tag and the one selected state */
+  --red: #D6302A;
+
+  /* Reserved: no data */
+  --no-data: #E4E4E4;
+
+  /* Reserved: tax components in stacked bars and keys. */
+  --comp-state-income: #123F70;
+  --comp-local-income: #9CC0E3;
+  --comp-sales: #8C6BB1;
+  --comp-property: #5E5E5E;
+
+  /* Chart reference line (median of 51 states) */
+  --reference: #8C8C8C;
+}

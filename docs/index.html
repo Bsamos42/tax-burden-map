@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>Same family, a $6,400 difference | State and local tax burden map</title>
+<meta name="description" content="What one married couple with two children pays in state and local taxes in every state, as a share of income and in dollars, tax year 2025.">
+<link rel="canonical" href="https://bsamos42.github.io/tax-burden-map/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tax burden map">
+<meta property="og:title" content="Same family, a $6,400 difference">
+<meta property="og:description" content="State and local taxes for the same family in every state, 2025: from 3.1% of income in Wyoming to 10.7% in New York.">
+<meta property="og:url" content="https://bsamos42.github.io/tax-burden-map/">
+<meta property="og:image" content="https://bsamos42.github.io/tax-burden-map/img/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Map of state and local taxes as a share of income for the same family at the U.S. median income, from 3.1% in Wyoming to 10.7% in New York and Illinois.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/source-sans-3-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/source-sans-3-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="data/map_data.min.json" as="fetch" crossorigin>
+<link rel="preload" href="data/geo.json" as="fetch" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/styles.css">
+<script type="module" src="js/views/burden.js"></script>
+</head>
+<body>
+<div class="page">
+
+<header class="head">
+  <div class="tag" aria-hidden="true"></div>
+  <h1 id="title">Same family, a $6,400 difference</h1>
+  <p id="dek" class="dek">That is the gap between the highest bill, $9,055 a year in New York, and the lowest, $2,665 in Wyoming.</p>
+  <p id="subtitle" class="sub">State and local taxes on a $84,780 income, married couple with two children, 2025, % of income</p>
+  <div id="legend" class="legend" role="list" aria-label="Color key"></div>
+  <div id="legend-ends" class="legend-ends" hidden><span>← Top pays more (progressive)</span><span>Bottom pays more (regressive) →</span></div>
+  <p id="renter-note" class="note" hidden>Landlords are assumed to pass 50% of property tax to renters.</p>
+</header>
+
+<button id="settings-btn" class="settings-btn" type="button" aria-haspopup="dialog" aria-controls="controls" aria-expanded="false">
+  <span class="settings-text"><span class="settings-label">Settings</span><span id="settings-summary" class="settings-summary">Share of income · U.S. median · Typical · All taxes</span></span>
+  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 14h14" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="7" cy="6" r="2.5" fill="#fff" stroke="currentColor" stroke-width="2"/><circle cx="13" cy="14" r="2.5" fill="#fff" stroke="currentColor" stroke-width="2"/></svg>
+</button>
+
+<div id="controls" class="controls" role="group" aria-label="Map settings">
+  <div class="sheet-head"><h2>Settings</h2><button id="settings-done" class="done" type="button">Done</button></div>
+  <div class="control">
+    <span class="clabel" id="lbl-measure">Measure</span>
+    <div class="seg" role="group" aria-labelledby="lbl-measure">
+      <button type="button" data-measure="rate">Share of income</button><button type="button" data-measure="dollars">Dollars</button><button type="button" data-measure="gap">Regressivity gap</button>
+    </div>
+  </div>
+  <div class="control" id="ctl-income">
+    <label class="clabel" for="sel-income">Income</label>
+    <select id="sel-income">
+      <option value="P10">10th percentile ($20,010)</option>
+      <option value="P30">30th percentile ($51,330)</option>
+      <option value="P50">50th percentile ($87,460)</option>
+      <option value="P70">70th percentile ($140,900)</option>
+      <option value="P90">90th percentile ($261,300)</option>
+      <option value="US_median">U.S. median ($84,780)</option>
+      <option value="State_median">Each state's median</option>
+    </select>
+  </div>
+  <div class="control">
+    <span class="clabel" id="lbl-hh">Household</span>
+    <div class="seg" role="group" aria-labelledby="lbl-hh">
+      <button type="button" data-hh="blended">Typical</button><button type="button" data-hh="owner">Owner</button><button type="button" data-hh="renter">Renter</button>
+    </div>
+  </div>
+  <div class="control" id="ctl-tax">
+    <label class="clabel" for="sel-tax">Tax</label>
+    <select id="sel-tax">
+      <option value="all">All taxes</option>
+      <option value="state_income_tax">State income</option>
+      <option value="local_income_tax">Local income</option>
+      <option value="sales_tax">Sales</option>
+      <option value="property_tax">Property</option>
+    </select>
+  </div>
+  <div class="control control-share">
+    <button id="share-btn" class="share-btn" type="button">Copy link to this view</button>
+    <span id="share-status" class="share-status" role="status"></span>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="main-col">
+    <nav class="crumb" aria-label="Map level"><span>United States</span></nav>
+    <div class="map-wrap" id="map-wrap">
+      <svg id="map" class="map" viewBox="0 0 1000 610" role="img" aria-labelledby="map-desc">
+        <title id="map-desc">Map of the United States</title>
+        <defs><pattern id="refund-dots" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" style="fill:var(--refund)"/><circle cx="3" cy="3" r="1.2" style="fill:var(--refund-dot)"/></pattern></defs>
+        <g id="states"></g>
+        <g id="callouts"></g>
+      </svg>
+      <div id="tiles" class="tiles" role="list" aria-label="States"></div>
+      <div id="tip" class="tip" hidden></div>
+      <p id="loading" class="loading">Loading data…</p>
+      <noscript><img class="noscript-map" src="img/og-card.png" alt="Map of state and local taxes as a share of income for the same family at the U.S. median income, from 3.1% in Wyoming to 10.7% in New York and Illinois. Turn on JavaScript to explore other incomes, households and taxes."></noscript>
+    </div>
+    <p class="tap-hint">Tap a state for its full bill.</p>
+
+    <section id="method" class="method">
+      <button id="method-btn" class="method-btn" type="button" aria-expanded="false" aria-controls="method-body"><span>How I calculated this</span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+      <div id="method-body" class="method-body" hidden>
+        <p>The family is a married couple filing jointly with two children, ages 8 and 5, whose income is all wages, in tax year 2025. Counted are state and local income taxes, general sales tax plus tax on vehicle purchases, and property tax, paid directly by owners or through rent by renters.</p>
+        <p><strong>Effective rate</strong> = taxes paid ÷ gross income.</p>
+        <div class="mlist">
+          <strong>Data sources</strong>
+          <span><a href="https://www.census.gov/programs-surveys/acs/news/data-releases/2025/release.html">Census ACS 2025</a>: state medians for income, home value, rent and property tax paid</span>
+          <span><a href="https://www.census.gov/library/publications/2026/demo/p60-289.html">Census CPS 2025</a>: U.S. income percentiles</span>
+          <span><a href="https://www.policyengine.org/us/research/state-income-tax-2025-update">PolicyEngine US</a>: state and local income taxes</span>
+          <span><a href="https://www.irs.gov/instructions/i1040sca">IRS sales tax tables</a>: general sales tax by income and family size</span>
+          <span><a href="https://www.bls.gov/cex/">BLS Consumer Expenditure Survey</a>: vehicle spending, for the vehicle-purchase tax</span>
+          <span><a href="https://www.lincolninst.edu/publications/other/50-state-property-tax-comparison-study-2024/">Lincoln Institute of Land Policy</a>: apartment property tax rates</span>
+          <span><a href="https://www.census.gov/programs-surveys/rhfs.html">HUD-Census Rental Housing Finance Survey</a>: apartment values, rents and taxes</span>
+        </div>
+        <div class="mlist">
+          <strong>Key assumptions</strong>
+          <span>Landlords pass 50% of property tax to renters. That is the share <a href="https://itep.org/who-pays-7th-edition-methodology-and-discussion/">ITEP's Who Pays?</a> assumes, calling it roughly the midpoint of the best available research, and the benchmark these results are checked against. Estimates range widely: <a href="https://ideas.repec.org/a/ntj/journl/v47y1994i2p295-316.html">Carroll and Yinger (1994)</a> found 10% to 15%; a <a href="https://www2.census.gov/ces/wp/2020/CES-WP-20-43.pdf">2020 Census Bureau working paper by Schwegman and Yinger</a> found 14% to 27%, while the older studies it reviews found 50% to 110%. The newest, a <a href="https://www.philadelphiafed.org/consumer-finance/consumer-credit/property-tax-pass-through-to-renters-a-quasi-experimental-approach">2025 Philadelphia Fed working paper by Baker</a>, finds 50% to 89% for rentals in Berkeley, Calif. Each state's detail panel also shows 15% and 100%.</span>
+          <span>Home value and rent scale with income at each state's median ratio. This is a simplification: research finds housing spending rises more slowly than income (<a href="https://www.ifo.de/DocDL/cesifo1_wp2156.pdf">Davis and Ortalo-Magné</a>; <a href="https://allengoodman.wayne.edu/Research/PUBS/gk_sej.pdf">Goodman and Kawai</a>). The model therefore likely overstates property tax for high-income families and understates it for low-income families, making property tax look less regressive than it is.</span>
+          <span>One conventional mortgage: 80% loan-to-value at the 2025 average 30-year fixed rate from <a href="https://freddiemac.gcs-web.com/news-releases/news-release-details/mortgage-rates-drop-lowest-level-2025">Freddie Mac's mortgage rate survey</a>, which assumes 20% down.</span>
+        </div>
+        <div class="mlist">
+          <strong>How it compares</strong>
+          <span>State rankings have a rank correlation of 0.82 with <a href="https://itep.org/whopays/">ITEP's Who Pays?</a> for middle-income households on the same taxes.</span>
+          <span><a href="https://taxfoundation.org/data/all/state/tax-burden-by-state/">Tax Foundation's measure</a> includes business taxes, excise taxes and high earners' income. That puts California, Hawaii, Vermont, Maine and Delaware near its top, while the median family here pays far less in those states.</span>
+        </div>
+        <p class="vintage">Taxes are for tax year 2025. Incomes and housing costs are from the 2025 American Community Survey and Current Population Survey; apartment property tax rates are from 2024 and apartment value-to-rent ratios from 2023; local income tax rates outside N.Y., Md., Ind. and Del. are from the 2022 Census of Governments. Data version <span id="data-version">2025.1</span>.</p>
+        <p><a href="https://github.com/Bsamos42/tax-burden-map/blob/main/METHODOLOGY.md">Full methodology</a> · <a href="https://github.com/Bsamos42/tax-burden-map">Code</a></p>
+      </div>
+    </section>
+
+    <section class="ranking" aria-labelledby="rank-h">
+      <div class="rank-head">
+        <div><h2 id="rank-h">How all states rank</h2><p id="rank-sub" class="rank-sub"></p></div>
+        <a id="csv" class="csv" href="#" download="tax-burden-map.csv">Download data (CSV)</a>
+      </div>
+      <div id="rank" class="rank-list" role="list" aria-label="States ranked by the current measure"></div>
+    </section>
+  </div>
+
+  <aside id="panel" class="panel" aria-label="State detail">
+    <div id="panel-body" class="panel-body"><p class="panel-empty">Select a state on the map or in the ranking to see what makes up its bill.</p></div>
+  </aside>
+</div>
+
+<footer class="foot">
+  <span>Sources: Census Bureau; IRS; BLS; PolicyEngine US; Lincoln Institute of Land Policy; author's calculations.</span>
+  <span>Married couple filing jointly, two children, wage income, tax year 2025.</span>
+</footer>
+</div>
+<div id="scrim" class="scrim" hidden></div>
+</body>
+</html>

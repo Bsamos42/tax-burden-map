@@ -1,10 +1,17 @@
-"""Export the results as one JSON file for the map prototype and Design hand-off."""
+"""Export the results.
+
+Writes two files:
+- data/burden.csv: the shared, flat burden dataset. One row per geography,
+  income level, tenure and tax component. Every page builds from it.
+- output/map_data.json: the full nested hand-off, with inputs, footnotes and
+  sensitivity results that are not burden figures.
+"""
 import json
 from pathlib import Path
 
 import pandas as pd
 
-from build_inputs import STATES
+from build_inputs import DATA_VERSION, STATE_FIPS, STATES
 
 ROOT = Path(__file__).resolve().parents[1]
 PROC = ROOT / "data" / "processed"
@@ -52,6 +59,26 @@ def block(row):
     return d
 
 
+BURDEN_COLUMNS = ["data_version", "fips", "geo_level", "state", "name", "level", "income",
+                  "tenure", "component", "dollars", "rate"]
+
+
+def write_burden(data):
+    """Flatten map_data's burden figures into data/burden.csv, sorted by FIPS."""
+    rows = []
+    for st, s in sorted(data["states"].items(), key=lambda kv: STATE_FIPS[kv[0]]):
+        for lvl, e in s["levels"].items():
+            for t in ("owner", "renter", "blended"):
+                for c in COMPS:
+                    d = e[t][c]
+                    rows.append([DATA_VERSION, STATE_FIPS[st], "state", st, s["name"], lvl, e["income"],
+                                 t, c, d, round(d / e["income"], 6)])
+    out = pd.DataFrame(rows, columns=BURDEN_COLUMNS)
+    path = ROOT / "data" / "burden.csv"
+    out.to_csv(path, index=False)
+    print("wrote", path, len(out), "rows")
+
+
 def main():
     w = pd.read_csv(PROC / "results_wide.csv")
     b = pd.read_csv(PROC / "results_blended.csv")
@@ -60,6 +87,7 @@ def main():
     prog = progressivity(w, b)
     notes = fha_footnotes(sens)
     data = {"meta": {
+        "data_version": DATA_VERSION,
         "tax_year": 2025,
         "household": "Married filing jointly, two children (ages 8 and 5), all income from wages",
         "income_points": {r.level: r.income for r in w[w.state == "AL"].drop_duplicates("level").itertuples()
@@ -72,7 +100,7 @@ def main():
         "sources": "See README.md and data/raw for every input and its source.",
     }, "states": {}}
     for st, g in w.groupby("state"):
-        s = {"name": NAMES[st], "inputs": {
+        s = {"name": NAMES[st], "fips": STATE_FIPS[st], "inputs": {
             "median_hh_income": float(inp.loc[st, "median_hh_income"]),
             "owner_property_tax_rate": round(float(inp.loc[st, "owner_property_tax_rate"]), 5),
             "local_sales_rate": round(float(inp.loc[st, "local_sales_rate"]), 5),
@@ -105,6 +133,7 @@ def main():
     data["meta"]["median_effective_rate_51"] = ref
     (OUT / "map_data.json").write_text(json.dumps(data, indent=1))
     print("wrote", OUT / "map_data.json", len(data["states"]), "states")
+    write_burden(data)
 
 
 if __name__ == "__main__":
