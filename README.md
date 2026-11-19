@@ -5,7 +5,9 @@ What one family pays in state and local taxes in all 50 states and D.C., as a sh
 The family is a married couple filing jointly with two children, ages 8 and 5, and all income from wages. Counted: state and local income tax, general sales tax plus tax on vehicle purchases, and property tax, paid directly by owners or through rent by renters. Effective rate = taxes paid ÷ gross income.
 
 - **Methodology:** [METHODOLOGY.md](METHODOLOGY.md)
-- **Map data:** [output/map_data.json](output/map_data.json), keyed by two-letter state code
+- **Shared data:** [data/burden.csv](data/burden.csv), one row per state, income level, tenure and tax component, keyed by FIPS code. Every page builds from it.
+- **Full hand-off:** [output/map_data.json](output/map_data.json), with model inputs, footnotes and sensitivity results
+- **Data version:** 2025.1 (see [CHANGELOG.md](CHANGELOG.md))
 
 ## Run it
 
@@ -17,10 +19,11 @@ cd model
 python build_inputs.py      # data/raw -> data/processed/state_inputs.csv
 python run_model.py         # PolicyEngine runs -> results_wide/long.csv, sensitivity.csv
 python validate.py          # benchmarks -> validation_states.csv, validation_summary.csv, results_blended.csv
-python export_map_data.py   # -> output/map_data.json
+python export_map_data.py   # -> data/burden.csv, output/map_data.json
+python build_site_data.py   # burden.csv -> docs/data/map_data.min.json, the data file the website loads
 ```
 
-## Outputs (data/processed and output)
+## Outputs (data, data/processed and output)
 
 | File | Contents |
 | --- | --- |
@@ -31,6 +34,7 @@ python export_map_data.py   # -> output/map_data.json
 | progressivity.csv | 90th-percentile rate minus 10th-percentile rate, in percentage points, by state and tenure |
 | sensitivity.csv | Renter pass-through at 15% and 100%; FHA terms for 10th and 30th percentile owners |
 | validation_states.csv / validation_summary.csv | Model vs ITEP, Tax Foundation and Lincoln Institute |
+| burden.csv | Shared burden dataset: data_version, fips, geo_level, state, name, level, income, tenure, component, dollars, rate |
 | output/map_data.json | Everything the map needs, by state and income level |
 
 Vehicle tax: annual vehicle spending from a log-log fit of CE 2025 deciles 2 to 10 (elasticity 0.70), scaled by 1.076 to match married couples whose oldest child is 6 to 17, times each state's vehicle tax rate.
@@ -38,6 +42,25 @@ Vehicle tax: annual vehicle spending from a log-log fit of CE 2025 deciles 2 to 
 Mortgage: one conventional regime (80% loan-to-value). Where FHA terms would change a 10th- or 30th-percentile owner's rate by 0.1 point or more, map_data.json carries a footnote (8 states, all at the 30th percentile).
 
 Income levels: P10, P30, P50, P70, P90 (CPS 2025 household income percentiles: $20,010; $51,330; $87,460; $140,900; $261,300), US_median (ACS 2025: $84,780) and State_median (ACS 2025).
+
+## Website (docs)
+
+GitHub Pages serves `docs/` as is; there is no build step. The page uses native JavaScript modules, so open it through a local server (`python -m http.server -d docs`), not from the file system.
+
+| File | Role |
+| --- | --- |
+| index.html | Tax Burden Map page |
+| css/tokens.css | Type, interface colors and the reserved data colors; each data color has one meaning across the project |
+| css/styles.css | Page layout |
+| js/data.js | Loads the site data and shapes, keyed by FIPS |
+| js/url-state.js | Shareable-link parameters: live, reserved and the rules for changing them |
+| js/map.js | Choropleth and tile grid; knows nothing about taxes |
+| js/legend.js | Fixed-break legends, refund and no-data swatches |
+| js/format.js | AP-style numbers, percents and dollars |
+| js/views/burden.js | Burden controls, copy, detail panel, ranking and CSV download |
+| data/ | Site data file and state shapes (us-atlas 3.0.1, simplified), both keyed by FIPS |
+
+Link parameters are permanent once published: `measure`, `income`, `household`, `tax` and `state` are live; `county`, `preset` and `w` are reserved for later stages and carried through untouched. Names and values are never renamed or reused.
 
 ## Inputs and sources (data/raw)
 

@@ -101,7 +101,7 @@ T_{\text{renter}} = \gamma \times t_{\text{apt}} \times M \times \text{Rent}
 | Term | Meaning | Source |
 | --- | --- | --- |
 | t\_apt | Apartment effective tax rate: average of the state's largest city and its rural municipality | [Lincoln Institute 50-State Property Tax Comparison, taxes paid in 2024](https://www.lincolninst.edu/publications/other/50-state-property-tax-comparison-study-2024/); apartments valued at a fixed [$600,000 plus $30,000 of fixtures](https://www.nmhc.org/news/research-corner/2024/unequal-burdens-exploring-effective-property-tax-variation-and-the-regressive-nature-of-apartment-property-taxes/) |
-| M | Apartment value ÷ annual rent. National median of 7.27 for 5+ unit properties (value per unit ÷ annual rent receipts per unit), scaled by each state's ACS home-value-to-rent ratio relative to the U.S. | [HUD-Census Rental Housing Finance Survey 2024](https://www.census.gov/programs-surveys/rhfs/technical-documentation/methodology.html), which collects property value, rents and real estate taxes; ACS 2025 |
+| M | Apartment value ÷ annual rent. National median of 7.27 for 5+ unit properties (value per unit ÷ annual rent receipts per unit), scaled by each state's ACS home-value-to-rent ratio relative to the U.S. | [HUD-Census Rental Housing Finance Survey 2024](https://www.census.gov/programs-surveys/rhfs/technical-documentation/methodology.html) (2023 reference year), which collects property value, rents and real estate taxes; ACS 2025 |
 | γ | Share of the property tax shifted to renters | 50% base case, matching ITEP for validation; 15% and 100% shown in the methodology panel |
 | Rent | Household rent at the given income | ACS 2025 median rent-to-income ratio |
 
@@ -134,6 +134,12 @@ The recommended tax year is 2025, because the income, housing and sales tax inpu
 | Local sales and income tax rates | Sales: PolicyEngine official state files, Tax Foundation midyear 2025 for 16 states. Income: PolicyEngine for NY, MD, IN, DE; Census 2022 local income tax revenue ÷ ACS household income elsewhere | 2025 | Done |
 
 **PolicyEngine US is the income tax engine.** Several states cut rates or moved to flat taxes after 2021, so TAXSIM 35 would misstate 2025 liabilities. The TAXSIM 2024 beta stays as a cross-check on a sample of states. Other inputs: Lincoln Institute apartment effective tax rates (2024 tax year) and the HUD-Census Rental Housing Finance Survey (2023 reference year) for the renter share, and Freddie Mac PMMS weekly rates for the 2025 average mortgage rate.
+
+**Vintage line.** The map's methodology panel and this page carry one line on vintages, so any later page that pairs these figures with lagged spending or outcome data discloses the gap the same way:
+
+> Taxes are for tax year 2025. Incomes and housing costs are from the 2025 American Community Survey and Current Population Survey; apartment property tax rates are from 2024 and apartment value-to-rent ratios from 2023; local income tax rates outside N.Y., Md., Ind. and Del. are from the 2022 Census of Governments. Data version 2025.1.
+
+**Data version.** Published figures carry a data version, the tax year plus a revision number (2025.1). It appears in data/burden.csv, the site data file, the CSV download and the methodology panel, and changes whenever any figure changes. CHANGELOG.md records why.
 
 ## Validation
 
@@ -206,6 +212,8 @@ Phase 1 ships the state map; Phase 2 reuses the same engine with county inputs.
 | Interaction | Click a state for detail | Click a state to drill into its counties |
 
 **Low-confidence flags.** Counties where the ACS margin of error on median income, home value or taxes paid exceeds a set share of the estimate are shown with hatching and a tooltip note. Thresholds are set in decisions.
+
+**Geography keys.** Every dataset and map shape is keyed by Census FIPS code; postal codes are labels and URL values only. County FIPS starts with its state's two digits, so counties roll up to states without a lookup table. D.C. is a state-equivalent (FIPS 11) with its own tile and a full row in every table. Where a measure has no value for an area, the map shows it in "no data" gray, the tooltip and detail panel say so, and it sits last in the ranking.
 
 **Within-county variation.** City sales and income taxes differ inside a county. County figures are population-weighted averages, and the tooltip says so.
 
